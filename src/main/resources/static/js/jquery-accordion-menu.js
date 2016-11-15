@@ -1,4 +1,4 @@
-; (function($, window, document, undefined) {
+(function($, window, document, undefined) {
     var pluginName = "jqueryAccordionMenu";
     var defaults = {
         speed: 300,
@@ -15,6 +15,7 @@
         this._name = pluginName;
         this.init()
     };
+
     $.extend(Plugin.prototype, {
         init: function() {
             this.openSubmenu();
