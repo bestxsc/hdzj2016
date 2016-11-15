@@ -1,9 +1,10 @@
 package wl.hdzj.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import wl.hdzj.common.AddVaild;
 import wl.hdzj.entity.Columnnn;
 import wl.hdzj.entity.Team;
 
@@ -31,6 +32,26 @@ public class NewsVO{
      */
     private Columnnn lColumn;
     private Team lTeams;
+    @NotBlank(message = "参数非空", groups = {AddVaild.class})
+    @Length(max = 500, message = "标题长度不超过500位字符")
+    private String title;
+    @NotBlank(message = "参数非空", groups = {AddVaild.class})
+    @Length(max = 500, message = "子标题长度不超过500位字符")
+    private String subtitle;
+    @NotBlank(message = "参数非空", groups = {AddVaild.class})
+    @Length(max = 4000, message = "内容长度不超过4000位字符")
+    private String message;
+    @NotBlank(message = "参数非空", groups = {AddVaild.class})
+    @Length(max = 500, message = "作者字段长度不超过500字符")
+    private String auther;
+    @NotBlank(message = "图片参数不能为空", groups = {AddVaild.class})
+    private String pic;
+    private Short type;
+    @Range(min = 0, max = 1, message = "isdraft字段错误")
+    private Short isdraft;
+    @Range(min = 0, max = 1, message = "istop字段错误")
+    private Short istop;
+
     /*
     也就是说，这两组属性并不会造成污染
      */
@@ -84,30 +105,6 @@ public class NewsVO{
     public void setCid(Integer cid) {
         this.cid = cid;
     }
-
-    //@NotNull(message = "标题不能为空")
-    @Length(min = 5, max = 500, message = "标题长度范围为5-500位字符")
-    private String title;
-
-    private String subtitle;
-
-    //@NotNull(message = "内容不能为空")
-    @Length(min = 5, max = 4000, message = "标题长度范围为5-4000位字符")
-    private String message;
-
-    @Length(min = 5, max = 500, message = "标题长度范围为5-500位字符")
-    private String auther;
-
-    @Length(min = 5, max = 500, message = "标题长度范围为5-500位字符")
-    private String pic;
-
-    private Short type;
-
-    @Range(min = 0, max = 1, message = "是否为草稿")
-    private Short isdraft;
-
-    @Range(min = 0, max = 1, message = "是否置顶")
-    private Short istop;
 
     public String getTitle() {
         return title;
@@ -173,9 +170,12 @@ public class NewsVO{
         this.istop = istop;
     }
 
+    public Integer getNid() {
+        return this.nid;
+    }
+
     public void setNid(Integer nid) {
         this.nid = nid;
     }
-    public Integer getNid() { return this.nid; }
 
 }

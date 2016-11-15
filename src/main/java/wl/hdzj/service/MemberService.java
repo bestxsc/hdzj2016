@@ -11,7 +11,7 @@ import java.util.List;
 public interface MemberService {
     List<Member> findShow();
     @Transactional
-    Member add(MemberVO memberVO) throws Exception;
+    Member add(MemberVO memberVO, String sid) throws Exception;
     Page<Member> gets(Pageable p);
     @Transactional
     long deleteByIDs(List<Integer> ids);

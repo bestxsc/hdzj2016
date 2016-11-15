@@ -1,19 +1,28 @@
 package wl.hdzj.domain;
 
+import wl.hdzj.common.AddVaild;
+import wl.hdzj.common.UpdateVaild;
 import wl.hdzj.entity.Team;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
  * Member 领域模型
  */
 public class MemberVO{
+    @NotNull(message = "成员ID不为空", groups = {UpdateVaild.class})
     private Integer mid;
+    @NotNull(message = "成员姓名不为空", groups = {AddVaild.class})
     private String name;
+    @Size(max = 1, message = "参数非法", groups = {AddVaild.class, UpdateVaild.class})
     private Short sex;
     private String jobtitle;
     private String subject;
     private String describe;
+
+    @NotNull(message = "成员图片不为空", groups = {AddVaild.class})
     private String pic;
     private Short identify;
     private Short isshow;

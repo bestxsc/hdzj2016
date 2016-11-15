@@ -1,8 +1,18 @@
 package wl.hdzj.domain;
 
+import org.hibernate.validator.constraints.NotBlank;
+import wl.hdzj.common.AddVaild;
+import wl.hdzj.common.UpdateVaild;
+
+import javax.validation.constraints.NotNull;
+
 public class ColumnVO {
+    @NotNull(message = "栏目ID不能为空", groups = {UpdateVaild.class})
     private Integer cid;
+
+    @NotBlank(message = "栏目名称不为空", groups = {AddVaild.class})
     private String name;
+
     private Integer parterid;
 
     @Override

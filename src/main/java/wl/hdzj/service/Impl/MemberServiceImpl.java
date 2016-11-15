@@ -1,32 +1,32 @@
 package wl.hdzj.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.ExceptionTranslationStrategy;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import wl.hdzj.converter.ModelConverter;
 import wl.hdzj.dao.MemberRepository;
-import wl.hdzj.dao.TeamRepository;
 import wl.hdzj.domain.MemberVO;
-import wl.hdzj.domain.NewsVO;
-import wl.hdzj.entity.Columnnn;
 import wl.hdzj.entity.Member;
-import wl.hdzj.entity.Team;
 import wl.hdzj.service.MemberService;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MemberServiceImpl implements MemberService{
     //private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
 
     @Autowired
-    private MemberRepository memberRepository;
+    StringRedisTemplate stringRedisTemplate;
     @Autowired
-    private TeamRepository teamRepository;
+    private MemberRepository memberRepository;
+    @Value("${my.uf.upload}")
+    private String uppath;
 
     @Cacheable(value = "hdzj2016_cache")
     public List<Member> findShow(){
@@ -34,11 +34,33 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public Member add(MemberVO memberVO) throws Exception{
-        //存储记录
-        return memberRepository.save(
-                (Member) ModelConverter.convert(Member.class).apply(memberVO)
-        );
+    public Member add(MemberVO memberVO, String sid) throws Exception {
+        //获取图片id
+        String iid = memberVO.getPic();
+        //判断图片是否存在
+        if (iid != null && !iid.isEmpty() && stringRedisTemplate.opsForHash().size(iid) != 0) {
+            Map<Object, Object> em = stringRedisTemplate.opsForHash().entries(iid);
+            //校验Session ID
+            if (!em.get("sessionid").toString().equals(sid)) throw new Exception("不属于当前用户");
+            //临时缓存字符串
+            String temp = em.get("mime").toString();
+            //计算文件名
+            String tname = iid + "." + temp.substring(temp.lastIndexOf("/") + 1, temp.length());
+            File file = new File(em.get("path").toString(), tname);
+            if (!file.exists()) throw new Exception("文件错误");
+            //关联装载
+            //存储记录
+            Member result = memberRepository.save(
+                    (Member) ModelConverter.convert(Member.class).apply(memberVO)
+            );
+            //移动文件到持久目录
+            File dar = new File(String.format("%s%s", this.getClass().getClassLoader().getResource("").getPath(), uppath));
+            if (!dar.exists() && !dar.mkdir()) throw new Exception("文件错误");
+            if (!file.renameTo(new File(dar, file.getName()))) throw new Exception("文件错误");
+            return result;
+        } else {
+            throw new Exception("图片参数错误");
+        }
     }
 
     @Override
