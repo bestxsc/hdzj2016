@@ -22,12 +22,19 @@
         <td>-</td>
     </tr>
     <tr>
-        <td>新闻图片上传功能</td>
+        <td>图片上传功能</td>
         <td>lipengbiao</td>
         <td>测试用列</td>
         <td></td><td bgcolor=PowderBlue></td><td bgcolor=PowderBlue></td><td bgcolor=PowderBlue></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
         <td>-</td>
     </tr>
+        <tr>
+            <td>各表的增删改查</td>
+            <td>lipengbiao</td>
+            <td>测试用列</td>
+            <td></td><td></td><td></td><td></td><td bgcolor=PowderBlue></td><td bgcolor=PowderBlue></td><td bgcolor=PowderBlue></td><td bgcolor=PowderBlue></td><td bgcolor=PowderBlue></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            <td>-</td>
+        </tr>
 </table>
 
 ## 开发进度表
@@ -42,19 +49,19 @@
     <tr>
         <td rowspan = "3">李朋彪</td>
         <td>添加</td>
-        <td>未完成</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
-        <td>-</td>
+        <td>HDZJ2016.postman_collection</td>
     </tr>
     <tr>
         <td>查询</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>修改&删除</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
@@ -68,19 +75,19 @@
     <tr>
         <td rowspan = "3">李朋彪</td>
         <td>添加</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>查询</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>修改&删除</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
@@ -94,19 +101,19 @@
     <tr>
         <td rowspan = "3">李朋彪</td>
         <td>添加</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>查询</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>修改&删除</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
@@ -120,19 +127,19 @@
     <tr>
         <td rowspan = "3">李朋彪</td>
         <td>添加</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>查询</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>修改&删除</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
@@ -146,23 +153,23 @@
     <tr>
         <td rowspan = "3">李朋彪</td>
         <td>添加</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>查询</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>修改&删除</td>
-        <td>U•ェ•*U</td>
+        <td bgcolor= #00f96F>完成</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
-        <tr>
+    <tr>
         <th>日志管理</th>
         <th>功能</th>
         <th>实现</th>
@@ -172,19 +179,59 @@
     <tr>
         <td rowspan = "3">李朋彪</td>
         <td>日志记录</td>
-        <td>U•ェ•*U</td>
+        <td>-</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>查询</td>
-        <td>U•ェ•*U</td>
+        <td>-</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>删除</td>
-        <td>U•ェ•*U</td>
+        <td>-</td>
+        <td bgcolor= Yellow>未测试</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <th>权限管理</th>
+        <th>功能</th>
+        <th>实现</th>
+        <td>测试</td>
+        <th>测试用例</th>
+    </tr>
+    <tr>
+        <td rowspan = "2">李朋彪</td>
+        <td>授权/鉴权</td>
+        <td>-</td>
+        <td bgcolor= Yellow>未测试</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>用户管理</td>
+        <td>-</td>
+        <td bgcolor= Yellow>未测试</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <th>前端</th>
+        <th>功能</th>
+        <th>实现</th>
+        <td>测试</td>
+        <th>测试用例</th>
+    </tr>
+    <tr>
+        <td rowspan = "3">-</td>
+        <td>网站前台</td>
+        <td>-</td>
+        <td bgcolor= Yellow>未测试</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>网站后台</td>
+        <td>-</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
