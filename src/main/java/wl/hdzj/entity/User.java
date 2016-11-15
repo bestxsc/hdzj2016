@@ -1,8 +1,6 @@
 package wl.hdzj.entity;
 
 import javax.persistence.*;
-import javax.persistence.Column;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Objects;
 
 @Entity
@@ -29,7 +27,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "account", nullable = false, length = 200)
+    @Column(name = "account", nullable = false, length = 200, unique = true)
     public String getAccount() {
         return account;
     }
@@ -39,7 +37,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "name", length = 100)
+    @Column(name = "name", length = 100, nullable = false)
     public String getName() {
         return name;
     }
@@ -49,7 +47,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "passwd", length = 100)
+    @Column(name = "passwd", length = 100, nullable = false)
     public String getPasswd() {
         return passwd;
     }
@@ -74,6 +72,10 @@ public class User {
         return sex;
     }
 
+    public void setSex(Short sex) {
+        this.sex = sex;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -85,10 +87,6 @@ public class User {
                 ", sex=" + sex +
                 ", role='" + role + '\'' +
                 '}';
-    }
-
-    public void setSex(Short sex) {
-        this.sex = sex;
     }
 
     @Basic

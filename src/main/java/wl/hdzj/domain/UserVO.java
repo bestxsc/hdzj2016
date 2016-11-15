@@ -1,15 +1,22 @@
 package wl.hdzj.domain;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * Created by lipengbiao on 2016/11/14.
  */
 public class UserVO {
     private Integer uid;
+
+    @NotBlank(message = "用户名不能为空")
     private String account;
+    @NotBlank(message = "姓名不能为空")
     private String name;
+    @NotBlank(message = "密码不能为空")
     private String passwd;
     private String phone;
     private Short sex;
+    @NotBlank(message = "权限角色不能为空")
     private String role;
 
     public Integer getUid() {

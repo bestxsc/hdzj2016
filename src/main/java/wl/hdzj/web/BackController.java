@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.repository.query.Param;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -23,6 +22,7 @@ import wl.hdzj.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
@@ -38,11 +38,6 @@ import java.util.concurrent.TimeUnit;
 @RestController
 public class BackController {
     private static final String SUPPORT_IMAGE_LIST = "image/gif,image/png,image/jpeg";
-    @Value("${my.uf.temp}")
-    private String utempp;
-    @Value("${my.uf.upload}")
-    private String uulp;
-
     @Autowired
     StringRedisTemplate stringRedisTemplate;
     @Autowired
@@ -57,13 +52,55 @@ public class BackController {
     UserService userService;
     @Autowired
     RelationService relationService;
+    @Value("${my.uf.temp}")
+    private String utempp;
+    @Value("${my.uf.upload}")
+    private String uulp;
+
+    public static String getVailError(BindingResult vr) {
+        /*
+        StringBuilder sb = new StringBuilder('[');
+        List<ObjectError> le = vr.getAllErrors();
+        for (ObjectError oe: le) {
+            sb.append(oe.getObjectName());
+            sb.append(":");
+            sb.append(oe.getDefaultMessage());
+            sb.append(",");
+        }
+        sb.append(']');
+        */
+        List<ObjectError> le = vr.getAllErrors();
+        return le.get(0).getObjectName() + ":" + le.get(0).getDefaultMessage();
+    }
+
+    /**
+     * 分页参数检查器
+     *
+     * @param pv
+     * @return
+     */
+    private static PageRequest pageFiler(PageVO pv) {
+        if (pv.getPage() != null & pv.getSize() != null &&
+                pv.getSortc() != null && pv.getSort() != null) {
+            return new PageRequest(pv.getPage(), pv.getSize(),
+                    (pv.getSort() == 0) ? Sort.Direction.ASC : Sort.Direction.DESC,
+                    pv.getSortc());
+        } else if (pv.getPage() != null & pv.getSize() != null) {
+            return new PageRequest(pv.getPage(), pv.getSize());
+        } else {
+            return null;
+        }
+    }
 
     /** 添加关系
      * @param vo 领域模型
      * @return 返回结果
      */
     @RequestMapping(value = "/add/relation", method = RequestMethod.POST)
-    public @ResponseBody MessageVO<RelationVO> add(RelationVO vo){
+    public
+    @ResponseBody
+    MessageVO<RelationVO> add(@Valid RelationVO vo, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         try {
             Relation data = relationService.add(vo);
             RelationVO nv = (RelationVO) ModelConverter.convert(RelationVO.class).apply(data);
@@ -87,7 +124,10 @@ public class BackController {
      * @return
      */
     @RequestMapping(value = "/update/relation", method = RequestMethod.POST)
-    public @ResponseBody MessageVO<RelationVO> update(RelationVO rv){
+    public
+    @ResponseBody
+    MessageVO<RelationVO> update(@Valid RelationVO rv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         try {
             RelationVO result = (RelationVO) ModelConverter.convert(RelationVO.class).apply(relationService.update(rv)) ;
             return new MessageVO<>(result);
@@ -102,7 +142,8 @@ public class BackController {
      * @return 分页
      */
     @RequestMapping(value = "/query/relation", method = RequestMethod.GET)
-    public MessageVO<Page> query(RelationVO rv, PageVO pv){
+    public MessageVO<Page> query(@Valid RelationVO rv, PageVO pv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         PageRequest pq = pageFiler(pv);
         return (pq == null) ? new MessageVO<>("获取失败", "参数错误") :
                 new MessageVO<>(relationService.querys(rv, pq));
@@ -114,7 +155,10 @@ public class BackController {
      * @return 返回结果
      */
     @RequestMapping(value = "/get/relation", method = RequestMethod.GET)
-    public @ResponseBody MessageVO<Page> getRelation(PageVO pv){
+    public
+    @ResponseBody
+    MessageVO<Page> getRelation(@Valid PageVO pv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         PageRequest pq = pageFiler(pv);
         return (pq == null) ? new MessageVO<>("获取失败", "参数错误") :
                 new MessageVO<>(relationService.gets(pq));
@@ -125,7 +169,10 @@ public class BackController {
      * @return 返回结果
      */
     @RequestMapping(value = "/add/user", method = RequestMethod.POST)
-    public @ResponseBody MessageVO<UserVO> add(UserVO vo){
+    public
+    @ResponseBody
+    MessageVO<UserVO> add(@Valid UserVO vo, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         try {
             User data = userService.add(vo);
             UserVO nv = (UserVO) ModelConverter.convert(UserVO.class).apply(data);
@@ -149,7 +196,10 @@ public class BackController {
      * @return
      */
     @RequestMapping(value = "/update/user", method = RequestMethod.POST)
-    public @ResponseBody MessageVO<UserVO> update(UserVO uv){
+    public
+    @ResponseBody
+    MessageVO<UserVO> update(@Valid UserVO uv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         try {
             UserVO result = (UserVO) ModelConverter.convert(UserVO.class).apply(userService.update(uv)) ;
             return new MessageVO<>(result);
@@ -164,7 +214,8 @@ public class BackController {
      * @return 分页
      */
     @RequestMapping(value = "/query/user", method = RequestMethod.GET)
-    public MessageVO<Page> query(UserVO uv, PageVO pv){
+    public MessageVO<Page> query(@Valid UserVO uv, PageVO pv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         PageRequest pq = pageFiler(pv);
         return (pq == null) ? new MessageVO<>("获取失败", "参数错误") :
                 new MessageVO<>(userService.querys(uv, pq));
@@ -176,7 +227,10 @@ public class BackController {
      * @return 返回结果
      */
     @RequestMapping(value = "/get/user", method = RequestMethod.GET)
-    public @ResponseBody MessageVO<Page> getUser(PageVO pv){
+    public
+    @ResponseBody
+    MessageVO<Page> getUser(@Valid PageVO pv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         PageRequest pq = pageFiler(pv);
         return (pq == null) ? new MessageVO<>("获取失败", "参数错误") :
                 new MessageVO<>(userService.gets(pq));
@@ -187,7 +241,10 @@ public class BackController {
      * @return 返回结果
      */
     @RequestMapping(value = "/add/team", method = RequestMethod.POST)
-    public @ResponseBody MessageVO<TeamVO> add(TeamVO vo){
+    public
+    @ResponseBody
+    MessageVO<TeamVO> add(@Valid TeamVO vo, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         try {
             Team data = teamService.add(vo);
             TeamVO nv = (TeamVO) ModelConverter.convert(TeamVO.class).apply(data);
@@ -211,7 +268,10 @@ public class BackController {
      * @return
      */
     @RequestMapping(value = "/update/team", method = RequestMethod.POST)
-    public @ResponseBody MessageVO<TeamVO> update(TeamVO tv){
+    public
+    @ResponseBody
+    MessageVO<TeamVO> update(@Valid TeamVO tv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         try {
             TeamVO result = (TeamVO) ModelConverter.convert(TeamVO.class).apply(teamService.update(tv)) ;
             return new MessageVO<>(result);
@@ -226,7 +286,8 @@ public class BackController {
      * @return 分页
      */
     @RequestMapping(value = "/query/team", method = RequestMethod.GET)
-    public MessageVO<Page> query(TeamVO tv, PageVO pv){
+    public MessageVO<Page> query(@Valid TeamVO tv, @Valid PageVO pv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         PageRequest pq = pageFiler(pv);
         return (pq == null) ? new MessageVO<>("获取失败", "参数错误") :
                 new MessageVO<>(teamService.querys(tv, pq));
@@ -238,7 +299,10 @@ public class BackController {
      * @return 返回结果
      */
     @RequestMapping(value = "/get/team", method = RequestMethod.GET)
-    public @ResponseBody MessageVO<Page> getTeam(PageVO pv){
+    public
+    @ResponseBody
+    MessageVO<Page> getTeam(@Valid PageVO pv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         PageRequest pq = pageFiler(pv);
         return (pq == null) ? new MessageVO<>("获取失败", "参数错误") :
                 new MessageVO<>(teamService.gets(pq));
@@ -249,7 +313,10 @@ public class BackController {
      * @return 返回结果
      */
     @RequestMapping(value = "/add/column", method = RequestMethod.POST)
-    public @ResponseBody MessageVO<ColumnVO> add(ColumnVO vo){
+    public
+    @ResponseBody
+    MessageVO<ColumnVO> add(@Valid ColumnVO vo, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         try {
             Columnnn data = columnService.add(vo);
             ColumnVO nv = (ColumnVO) ModelConverter.convert(ColumnVO.class).apply(data);
@@ -273,7 +340,10 @@ public class BackController {
      * @return
      */
     @RequestMapping(value = "/update/column", method = RequestMethod.POST)
-    public @ResponseBody MessageVO<ColumnVO> update(ColumnVO cv){
+    public
+    @ResponseBody
+    MessageVO<ColumnVO> update(@Valid ColumnVO cv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         try {
             ColumnVO result = (ColumnVO) ModelConverter.convert(ColumnVO.class).apply(columnService.update(cv)) ;
             return new MessageVO<>(result);
@@ -288,7 +358,8 @@ public class BackController {
      * @return 分页
      */
     @RequestMapping(value = "/query/column", method = RequestMethod.GET)
-    public MessageVO<Page> query(ColumnVO cv, PageVO pv){
+    public MessageVO<Page> query(@Valid ColumnVO cv, @Valid PageVO pv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         PageRequest pq = pageFiler(pv);
         return (pq == null) ? new MessageVO<>("获取失败", "参数错误") :
                 new MessageVO<>(columnService.querys(cv, pq));
@@ -300,7 +371,10 @@ public class BackController {
      * @return 返回结果
      */
     @RequestMapping(value = "/get/column", method = RequestMethod.GET)
-    public @ResponseBody MessageVO<Page> getColumn(PageVO pv){
+    public
+    @ResponseBody
+    MessageVO<Page> getColumn(@Valid PageVO pv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         PageRequest pq = pageFiler(pv);
         return (pq == null) ? new MessageVO<>("获取失败", "参数错误") :
                 new MessageVO<>(columnService.gets(pq));
@@ -311,7 +385,10 @@ public class BackController {
      * @return 返回结果
      */
     @RequestMapping(value = "/add/member", method = RequestMethod.POST)
-    public @ResponseBody MessageVO<MemberVO> add(MemberVO memberVO){
+    public
+    @ResponseBody
+    MessageVO<MemberVO> add(@Valid MemberVO memberVO, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         try {
             Member data = memberService.add(memberVO);
             MemberVO nv = (MemberVO) ModelConverter.convert(MemberVO.class).apply(data);
@@ -335,7 +412,10 @@ public class BackController {
      * @return
      */
     @RequestMapping(value = "/update/member", method = RequestMethod.POST)
-    public @ResponseBody MessageVO<MemberVO> update(MemberVO mv){
+    public
+    @ResponseBody
+    MessageVO<MemberVO> update(@Valid MemberVO mv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         try {
             MemberVO result = (MemberVO) ModelConverter.convert(MemberVO.class).apply(memberService.update(mv)) ;
             return new MessageVO<>(result);
@@ -350,7 +430,8 @@ public class BackController {
      * @return 分页
      */
     @RequestMapping(value = "/query/member", method = RequestMethod.GET)
-    public MessageVO<Page> query(MemberVO mv, PageVO pv){
+    public MessageVO<Page> query(@Valid MemberVO mv, @Valid PageVO pv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         PageRequest pq = pageFiler(pv);
         return (pq == null) ? new MessageVO<>("获取失败", "参数错误") :
                 new MessageVO<>(memberService.querys(mv, pq));
@@ -362,28 +443,13 @@ public class BackController {
      * @return 返回结果
      */
     @RequestMapping(value = "/get/member", method = RequestMethod.GET)
-    public @ResponseBody MessageVO<Page> getMembers(PageVO pv){
+    public
+    @ResponseBody
+    MessageVO<Page> getMembers(@Valid PageVO pv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         PageRequest pq = pageFiler(pv);
         return (pq == null) ? new MessageVO<>("获取失败", "参数错误") :
                 new MessageVO<>(memberService.gets(pq));
-    }
-
-
-    /** 分页参数检查器
-     * @param pv
-     * @return
-     */
-    private static PageRequest pageFiler(PageVO pv){
-        if (pv.getPage() != null & pv.getSize() != null &&
-                pv.getSortc() != null && pv.getSort() != null){
-            return new PageRequest(pv.getPage(), pv.getSize(),
-                    (pv.getSort() == 0) ? Sort.Direction.ASC : Sort.Direction.DESC,
-                    pv.getSortc());
-        } else if (pv.getPage() != null & pv.getSize() != null){
-            return new PageRequest(pv.getPage(), pv.getSize());
-        } else {
-            return null;
-        }
     }
 
     /** 添加新闻
@@ -392,7 +458,10 @@ public class BackController {
      * @return 返回结果
      */
     @RequestMapping(value = "/add/news", method = RequestMethod.POST)
-    public @ResponseBody MessageVO<NewsVO> add(NewsVO newsVO, HttpServletRequest request){
+    public
+    @ResponseBody
+    MessageVO<NewsVO> add(@Valid NewsVO newsVO, HttpServletRequest request, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         try {
             News data = newsService.add(newsVO, request.getSession().getId());
             NewsVO nv = (NewsVO) ModelConverter.convert(NewsVO.class).apply(data);
@@ -416,7 +485,10 @@ public class BackController {
      * @return
      */
     @RequestMapping(value = "/update/news", method = RequestMethod.POST)
-    public @ResponseBody MessageVO<NewsVO> update(NewsVO nv){
+    public
+    @ResponseBody
+    MessageVO<NewsVO> update(@Valid NewsVO nv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         try {
             NewsVO result = (NewsVO) ModelConverter.convert(NewsVO.class).apply(newsService.update(nv)) ;
             return new MessageVO<>(result);
@@ -431,7 +503,8 @@ public class BackController {
      * @return 分页
      */
     @RequestMapping(value = "/query/news", method = RequestMethod.GET)
-    public MessageVO<Page> query(NewsVO nv, PageVO pv){
+    public MessageVO<Page> query(@Valid NewsVO nv, @Valid PageVO pv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         PageRequest pq = pageFiler(pv);
         return (pq == null) ? new MessageVO<>("获取失败", "参数错误") :
                 new MessageVO<>(newsService.querys(nv, pq));
@@ -443,7 +516,10 @@ public class BackController {
      * @return 返回结果
      */
     @RequestMapping(value = "/get/news", method = RequestMethod.GET)
-    public @ResponseBody MessageVO<Page> getNews(PageVO pv){
+    public
+    @ResponseBody
+    MessageVO<Page> getNews(@Valid PageVO pv, BindingResult vr) {
+        if (vr.hasErrors()) return new MessageVO<>("参数错误", getVailError(vr));
         PageRequest pq = pageFiler(pv);
         return (pq == null) ? new MessageVO<>("获取失败", "参数错误") :
                 new MessageVO<>(newsService.gets(pq));
