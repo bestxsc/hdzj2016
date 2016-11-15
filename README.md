@@ -18,21 +18,21 @@
         <td>项目立项和框架的搭建</td>
         <td>lipengbiao</td>
         <td>-</td>
-        <td>√</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td bgcolor=PowderBlue>√</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
         <td>-</td>
     </tr>
     <tr>
         <td>图片上传功能</td>
         <td>lipengbiao</td>
         <td>测试用列</td>
-        <td></td><td bgcolor=PowderBlue></td><td bgcolor=PowderBlue></td><td bgcolor=PowderBlue></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td></td><td bgcolor=PowderBlue>√</td><td bgcolor=PowderBlue>√</td><td bgcolor=PowderBlue>√</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
         <td>-</td>
     </tr>
         <tr>
             <td>各表的增删改查</td>
             <td>lipengbiao</td>
             <td>测试用列</td>
-            <td></td><td></td><td></td><td></td><td bgcolor=PowderBlue></td><td bgcolor=PowderBlue></td><td bgcolor=PowderBlue></td><td bgcolor=PowderBlue></td><td bgcolor=PowderBlue></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            <td></td><td></td><td></td><td></td><td bgcolor=PowderBlue>√</td><td bgcolor=PowderBlue>√</td><td bgcolor=PowderBlue>√</td><td bgcolor=PowderBlue>√</td><td bgcolor=PowderBlue>√</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             <td>-</td>
         </tr>
 </table>
