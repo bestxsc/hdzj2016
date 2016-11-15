@@ -87,9 +87,6 @@
                                     <a class="btn-slide animation animated-item-3" href="404.html">Read More</a>
                                 </div>
                             </div>
-
-
-
                         </div>
                     </div>
                 </div>
@@ -259,23 +256,25 @@
     <!--/#recent-works-->
 
     <section id="services" class="service-item">
+        <!-- 移除除第一个外的其余子元素 -->
         <div class="container">
             <div class="center wow fadeInDown">
-                <h2>成员照介绍</h2>
+                <h2>核心成员</h2>
                 <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br /> et dolore magna aliqua. Ut enim ad minim veniam</p>
             </div>
 
-            <div class="row">
+            <div class="row" th:remove="all-but-first">
 
-                <div class="col-sm-6 col-md-4">
+                <!--/*@thymesVar id="mlist" type="java.util.List<wl.hdzj.entity.Member>"*/-->
+                <div class="col-sm-6 col-md-4" th:each="v:${mlist}">
                     <div class="media services-wrap wow fadeInDown">
                         <div class="pull-left">
-                            <img class="img-responsive" src="images/services/services2.png" />
+                            <img class="img-responsive" src="images/services/services2.png"/>
                         </div>
                         <div class="media-body">
                             <h3 class="media-heading">
-                            <a href="成员具体.html">林允儿</a></h3>
-                            <p>林允儿简介</p>
+                            <a href="#" th:text="${v.name}">姓名</a></h3>
+                            <p th:text="${v.describe}">简介</p>
                         </div>
                     </div>
                 </div>

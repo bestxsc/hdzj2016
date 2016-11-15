@@ -1,10 +1,8 @@
-package wl.hdzj.utils;
+package wl.hdzj.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.util.Base64Utils;
 

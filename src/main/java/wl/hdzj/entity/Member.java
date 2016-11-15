@@ -2,37 +2,37 @@ package wl.hdzj.entity;
 
 import javax.persistence.*;
 import javax.persistence.Column;
+import java.util.List;
+import java.util.Objects;
 
-/**
- * Created by micro on 2016/11/7.
- */
 @Entity
+@Table(name = "member", schema = "hdzj_2016")
 public class Member {
-    private int mid;
+    private Integer mid;
     private String name;
     private Short sex;
     private String jobtitle;
     private String subject;
-    private Integer sequence;
     private String describe;
     private String pic;
     private Short identify;
     private Short isshow;
     private String xueyuan;
+    private List<Team> rTeams;
 
     @Id
-    @GeneratedValue
-    @javax.persistence.Column(name = "mid", nullable = false)
-    public int getMid() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "mid", nullable = false)
+    public Integer getMid() {
         return mid;
     }
 
-    public void setMid(int mid) {
+    public void setMid(Integer mid) {
         this.mid = mid;
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 50)
+    @Column(name = "name", length = 50)
     public String getName() {
         return name;
     }
@@ -42,7 +42,7 @@ public class Member {
     }
 
     @Basic
-    @Column(name = "sex", nullable = true)
+    @Column(name = "sex")
     public Short getSex() {
         return sex;
     }
@@ -52,7 +52,7 @@ public class Member {
     }
 
     @Basic
-    @Column(name = "jobtitle", nullable = true, length = 255)
+    @Column(name = "jobtitle")
     public String getJobtitle() {
         return jobtitle;
     }
@@ -62,7 +62,7 @@ public class Member {
     }
 
     @Basic
-    @Column(name = "subject", nullable = true, length = 255)
+    @Column(name = "subject")
     public String getSubject() {
         return subject;
     }
@@ -72,17 +72,7 @@ public class Member {
     }
 
     @Basic
-    @Column(name = "sequence", nullable = true)
-    public Integer getSequence() {
-        return sequence;
-    }
-
-    public void setSequence(Integer sequence) {
-        this.sequence = sequence;
-    }
-
-    @Basic
-    @Column(name = "describe", nullable = true, length = 4000)
+    @Column(name = "describe", length = 4000)
     public String getDescribe() {
         return describe;
     }
@@ -92,7 +82,7 @@ public class Member {
     }
 
     @Basic
-    @Column(name = "pic", nullable = true, length = 255)
+    @Column(name = "pic")
     public String getPic() {
         return pic;
     }
@@ -102,7 +92,7 @@ public class Member {
     }
 
     @Basic
-    @Column(name = "identify", nullable = true)
+    @Column(name = "identify")
     public Short getIdentify() {
         return identify;
     }
@@ -112,7 +102,7 @@ public class Member {
     }
 
     @Basic
-    @Column(name = "isshow", nullable = true)
+    @Column(name = "isshow")
     public Short getIsshow() {
         return isshow;
     }
@@ -122,7 +112,7 @@ public class Member {
     }
 
     @Basic
-    @Column(name = "xueyuan", nullable = true, length = 255)
+    @Column(name = "xueyuan")
     public String getXueyuan() {
         return xueyuan;
     }
@@ -132,40 +122,54 @@ public class Member {
     }
 
     @Override
+    public String toString() {
+        return "Member{" +
+                "mid=" + mid +
+                ", name='" + name + '\'' +
+                ", sex=" + sex +
+                ", jobtitle='" + jobtitle + '\'' +
+                ", subject='" + subject + '\'' +
+                ", describe='" + describe + '\'' +
+                ", pic='" + pic + '\'' +
+                ", identify=" + identify +
+                ", isshow=" + isshow +
+                ", xueyuan='" + xueyuan + '\'' +
+                ", rTeams=" + rTeams +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Member member = (Member) o;
-
-        if (mid != member.mid) return false;
-        if (name != null ? !name.equals(member.name) : member.name != null) return false;
-        if (sex != null ? !sex.equals(member.sex) : member.sex != null) return false;
-        if (jobtitle != null ? !jobtitle.equals(member.jobtitle) : member.jobtitle != null) return false;
-        if (subject != null ? !subject.equals(member.subject) : member.subject != null) return false;
-        if (sequence != null ? !sequence.equals(member.sequence) : member.sequence != null) return false;
-        if (describe != null ? !describe.equals(member.describe) : member.describe != null) return false;
-        if (pic != null ? !pic.equals(member.pic) : member.pic != null) return false;
-        if (identify != null ? !identify.equals(member.identify) : member.identify != null) return false;
-        if (isshow != null ? !isshow.equals(member.isshow) : member.isshow != null) return false;
-        if (xueyuan != null ? !xueyuan.equals(member.xueyuan) : member.xueyuan != null) return false;
-
-        return true;
+        return Objects.equals(mid, member.mid) &&
+                Objects.equals(name, member.name) &&
+                Objects.equals(sex, member.sex) &&
+                Objects.equals(jobtitle, member.jobtitle) &&
+                Objects.equals(subject, member.subject) &&
+                Objects.equals(describe, member.describe) &&
+                Objects.equals(pic, member.pic) &&
+                Objects.equals(identify, member.identify) &&
+                Objects.equals(isshow, member.isshow) &&
+                Objects.equals(xueyuan, member.xueyuan) &&
+                Objects.equals(rTeams, member.rTeams);
     }
 
     @Override
     public int hashCode() {
-        int result = mid;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (sex != null ? sex.hashCode() : 0);
-        result = 31 * result + (jobtitle != null ? jobtitle.hashCode() : 0);
-        result = 31 * result + (subject != null ? subject.hashCode() : 0);
-        result = 31 * result + (sequence != null ? sequence.hashCode() : 0);
-        result = 31 * result + (describe != null ? describe.hashCode() : 0);
-        result = 31 * result + (pic != null ? pic.hashCode() : 0);
-        result = 31 * result + (identify != null ? identify.hashCode() : 0);
-        result = 31 * result + (isshow != null ? isshow.hashCode() : 0);
-        result = 31 * result + (xueyuan != null ? xueyuan.hashCode() : 0);
-        return result;
+        return Objects.hash(mid, name, sex, jobtitle, subject, describe, pic, identify, isshow, xueyuan, rTeams);
+    }
+
+    @ManyToMany(cascade = {}, fetch = FetchType.EAGER)
+    @JoinTable(name = "relation", schema = "hdzj_2016",
+            joinColumns = @JoinColumn(name = "mid", referencedColumnName = "mid", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "tid", referencedColumnName = "tid", nullable = false))
+    public List<Team> getRTeams() {
+        return rTeams;
+    }
+
+    private void setRTeams(List<Team> rTeams) {
+        this.rTeams = rTeams;
     }
 }

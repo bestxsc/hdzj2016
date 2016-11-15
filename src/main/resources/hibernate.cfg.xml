@@ -6,14 +6,12 @@
   <session-factory>
     <property name="connection.url">jdbc:mysql://localhost:3306/hdzj_2016</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-    <mapping class="wl.hdzj.entity.Column"/>
-    <mapping class="wl.hdzj.entity.Log"/>
+    <property name="format_sql">true</property>
+    <mapping class="wl.hdzj.entity.Columnnn"/>
     <mapping class="wl.hdzj.entity.Member"/>
     <mapping class="wl.hdzj.entity.News"/>
     <mapping class="wl.hdzj.entity.Relation"/>
     <mapping class="wl.hdzj.entity.Team"/>
     <mapping class="wl.hdzj.entity.User"/>
-    <!-- DB schema will be updated if needed -->
-    <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>
 </hibernate-configuration>

@@ -2,29 +2,30 @@ package wl.hdzj.entity;
 
 import javax.persistence.*;
 import javax.persistence.Column;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Objects;
 
-/**
- * Created by micro on 2016/11/7.
- */
 @Entity
+@Table(name = "user", schema = "hdzj_2016")
 public class User {
-    private int id;
+    private Integer uid;
     private String account;
     private String name;
     private String passwd;
     private String phone;
-    private short sex;
+    private Short sex;
     private String role;
+    private String salt;
 
     @Id
-    @GeneratedValue
-    @javax.persistence.Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @javax.persistence.Column(name = "uid", nullable = false)
+    public Integer getUid() {
+        return uid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     @Basic
@@ -38,7 +39,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name", length = 100)
     public String getName() {
         return name;
     }
@@ -48,7 +49,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "passwd", nullable = false, length = 100)
+    @Column(name = "passwd", length = 100)
     public String getPasswd() {
         return passwd;
     }
@@ -58,7 +59,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "phone", nullable = false, length = 20)
+    @Column(name = "phone", length = 20)
     public String getPhone() {
         return phone;
     }
@@ -68,12 +69,25 @@ public class User {
     }
 
     @Basic
-    @Column(name = "sex", nullable = false)
-    public short getSex() {
+    @Column(name = "sex")
+    public Short getSex() {
         return sex;
     }
 
-    public void setSex(short sex) {
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + uid +
+                ", account='" + account + '\'' +
+                ", name='" + name + '\'' +
+                ", passwd='" + passwd + '\'' +
+                ", phone='" + phone + '\'' +
+                ", sex=" + sex +
+                ", role='" + role + '\'' +
+                '}';
+    }
+
+    public void setSex(Short sex) {
         this.sex = sex;
     }
 
@@ -87,33 +101,30 @@ public class User {
         this.role = role;
     }
 
+    @Basic
+    @Column(name = "salt")
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt){ this.salt = salt; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         User user = (User) o;
-
-        if (id != user.id) return false;
-        if (sex != user.sex) return false;
-        if (account != null ? !account.equals(user.account) : user.account != null) return false;
-        if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (passwd != null ? !passwd.equals(user.passwd) : user.passwd != null) return false;
-        if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
-        if (role != null ? !role.equals(user.role) : user.role != null) return false;
-
-        return true;
+        return Objects.equals(uid, user.uid) &&
+                Objects.equals(account, user.account) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(passwd, user.passwd) &&
+                Objects.equals(phone, user.phone) &&
+                Objects.equals(sex, user.sex) &&
+                Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (account != null ? account.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (passwd != null ? passwd.hashCode() : 0);
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (int) sex;
-        result = 31 * result + (role != null ? role.hashCode() : 0);
-        return result;
+        return Objects.hash(uid, account, name, passwd, phone, sex, role);
     }
 }

@@ -1,21 +1,21 @@
 package wl.hdzj.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import wl.hdzj.service.MemberService;
 
 import javax.annotation.security.RolesAllowed;
 
-/**
- * Created by micro on 2016/11/3.
- */
-
 @Controller
 public class HomeController {
+    @Autowired
+    MemberService memberService;
+
     @RequestMapping(value={"", "/", "index"})
     public String index(ModelMap map) {
+        map.put("mlist", memberService.findShow());
         return "index";
     }
 

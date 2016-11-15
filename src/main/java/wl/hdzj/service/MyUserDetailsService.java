@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.Assert;
-import wl.hdzj.domain.UserRepository;
+import wl.hdzj.dao.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;

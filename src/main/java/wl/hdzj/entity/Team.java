@@ -1,37 +1,95 @@
 package wl.hdzj.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.persistence.Column;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
+import java.util.Objects;
 
-/**
- * Created by micro on 2016/11/7.
- */
 @Entity
-public class Team {
-    private int tid;
-    private int del;
+@Table(name = "team", schema = "hdzj_2016")
+public class Team{
+    private Integer tid;
+    private Integer del;
     private String desride;
     private String name;
     private String pic;
 
+    private List<Member> rMember;
+    private List<News> lNews;
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "tid=" + tid +
+                ", del=" + del +
+                ", desride='" + desride + '\'' +
+                ", name='" + name + '\'' +
+                ", pic='" + pic + '\'' +
+                ", rMember=" + rMember +
+                ", lNews=" + lNews +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return Objects.equals(tid, team.tid) &&
+                Objects.equals(del, team.del) &&
+                Objects.equals(desride, team.desride) &&
+                Objects.equals(name, team.name) &&
+                Objects.equals(pic, team.pic) &&
+                Objects.equals(rMember, team.rMember) &&
+                Objects.equals(lNews, team.lNews);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tid, del, desride, name, pic, rMember, lNews);
+    }
+
+    @ManyToMany(mappedBy = "RTeams",cascade = {}, fetch = FetchType.LAZY)
+    @JsonBackReference()
+    public List<Member> getRMember() {
+        return rMember;
+    }
+
+    private void setRMember(List<Member> rMember){
+        this.rMember = rMember;
+    }
+
+    @OneToMany(mappedBy = "LTeams", cascade = {}, fetch = FetchType.LAZY)
+    @JsonBackReference()
+    public List<News> getlNews() {
+        return lNews;
+    }
+
+    private void setlNews(List<News> lNews) {
+        this.lNews = lNews;
+    }
+
     @Id
-    @GeneratedValue
-    @javax.persistence.Column(name = "tid", nullable = false)
-    public int getTid() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "tid", nullable = false)
+    public Integer getTid() {
         return tid;
     }
 
-    public void setTid(int tid) {
+    public void setTid(Integer tid) {
         this.tid = tid;
     }
 
     @Basic
     @Column(name = "del", nullable = false)
-    public int getDel() {
+    public Integer getDel() {
         return del;
     }
 
-    public void setDel(int del) {
+    public void setDel(Integer del) {
         this.del = del;
     }
 
@@ -65,29 +123,4 @@ public class Team {
         this.pic = pic;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Team team = (Team) o;
-
-        if (tid != team.tid) return false;
-        if (del != team.del) return false;
-        if (desride != null ? !desride.equals(team.desride) : team.desride != null) return false;
-        if (name != null ? !name.equals(team.name) : team.name != null) return false;
-        if (pic != null ? !pic.equals(team.pic) : team.pic != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = tid;
-        result = 31 * result + del;
-        result = 31 * result + (desride != null ? desride.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (pic != null ? pic.hashCode() : 0);
-        return result;
-    }
 }

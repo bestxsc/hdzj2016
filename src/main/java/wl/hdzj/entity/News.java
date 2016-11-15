@@ -1,56 +1,93 @@
 package wl.hdzj.entity;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import groovy.transform.BaseScript;
+import org.springframework.beans.factory.annotation.Autowired;
+import wl.hdzj.dao.TeamRepository;
 
-/**
- * Created by micro on 2016/11/7.
- */
+import javax.persistence.*;
+import javax.persistence.Column;
+import java.sql.Timestamp;
+import java.util.Objects;
+
 @Entity
+@Table(name = "news", schema = "hdzj_2016")
 public class News {
-    private int nid;
+    private Integer nid;
     private String auther;
     private Timestamp date;
-    private short isdraft;
-    private short istop;
+    private Short isdraft;
+    private Short istop;
     private String message;
     private String pic;
     private String subtitle;
     private String title;
-    private short type;
-    private Column columnByCid;
-    private Team teamByTid;
+    private Short type;
 
-    public News(String auther, Timestamp date, short isdraft, short istop, String message, String pic, String subtitle, String title, short type, Column columnByCid, Team teamByTid) {
-        this.auther = auther;
-        this.date = date;
-        this.isdraft = isdraft;
-        this.istop = istop;
-        this.message = message;
-        this.pic = pic;
-        this.subtitle = subtitle;
-        this.title = title;
-        this.type = type;
-        this.columnByCid = columnByCid;
-        this.teamByTid = teamByTid;
+    private Integer cid;
+    private Integer tid;
+
+    //只读(update = false, insert = false)
+    private Columnnn lColumn;
+    private Team lTeams;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        News news = (News) o;
+        return Objects.equals(nid, news.nid) &&
+                Objects.equals(auther, news.auther) &&
+                Objects.equals(date, news.date) &&
+                Objects.equals(isdraft, news.isdraft) &&
+                Objects.equals(istop, news.istop) &&
+                Objects.equals(message, news.message) &&
+                Objects.equals(pic, news.pic) &&
+                Objects.equals(subtitle, news.subtitle) &&
+                Objects.equals(title, news.title) &&
+                Objects.equals(type, news.type) &&
+                Objects.equals(lColumn, news.lColumn) &&
+                Objects.equals(lTeams, news.lTeams);
     }
 
-    public News() {
+    @Override
+    public int hashCode() {
+        return Objects.hash(nid, auther, date, isdraft, istop, message, pic, subtitle, title, type, lColumn, lTeams);
+    }
+
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cid", referencedColumnName = "cid", updatable = false, insertable = false)
+    public Columnnn getLColumn() {
+        return lColumn;
+
+    }
+
+    public void setLColumn(Columnnn lColumn) {
+        this.lColumn = lColumn;
+    }
+
+    @Basic
+    @Column(name = "cid", nullable = false)
+    public Integer getCid() {
+        return cid;
+    }
+
+    public void setCid(Integer cid) {
+        this.cid = cid;
     }
 
     @Id
-    @GeneratedValue
-    @javax.persistence.Column(name = "nid", nullable = false)
-    public int getNid() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "nid", nullable = false)
+    public Integer getNid() {
         return nid;
     }
 
-    public void setNid(int nid) {
+    public void setNid(Integer nid) {
         this.nid = nid;
     }
 
     @Basic
-    @javax.persistence.Column(name = "auther", nullable = false, length = 255)
+    @Column(name = "auther", nullable = false)
     public String getAuther() {
         return auther;
     }
@@ -60,7 +97,7 @@ public class News {
     }
 
     @Basic
-    @javax.persistence.Column(name = "date", nullable = true)
+    @Column(name = "date")
     public Timestamp getDate() {
         return date;
     }
@@ -69,28 +106,44 @@ public class News {
         this.date = date;
     }
 
+    @Override
+    public String toString() {
+        return "News{" +
+                "nid=" + nid +
+                ", auther='" + auther + '\'' +
+                ", date=" + date +
+                ", isdraft=" + isdraft +
+                ", istop=" + istop +
+                ", message='" + message + '\'' +
+                ", pic='" + pic + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", title='" + title + '\'' +
+                ", type=" + type +
+                '}';
+    }
+
     @Basic
-    @javax.persistence.Column(name = "isdraft", nullable = false)
-    public short getIsdraft() {
+    @Column(name = "isdraft", nullable = false)
+    public Short getIsdraft() {
         return isdraft;
     }
 
-    public void setIsdraft(short isdraft) {
+    public void setIsdraft(Short isdraft) {
         this.isdraft = isdraft;
     }
 
     @Basic
-    @javax.persistence.Column(name = "istop", nullable = false)
-    public short getIstop() {
+    @Column(name = "istop", nullable = false)
+    public Short getIstop() {
         return istop;
     }
 
-    public void setIstop(short istop) {
+    public void setIstop(Short istop) {
         this.istop = istop;
     }
 
     @Basic
-    @javax.persistence.Column(name = "message", nullable = false, length = 4000)
+    @Column(name = "message", nullable = false, length = 4000)
     public String getMessage() {
         return message;
     }
@@ -100,7 +153,7 @@ public class News {
     }
 
     @Basic
-    @javax.persistence.Column(name = "pic", nullable = false, length = 255)
+    @Column(name = "pic", nullable = false)
     public String getPic() {
         return pic;
     }
@@ -110,7 +163,7 @@ public class News {
     }
 
     @Basic
-    @javax.persistence.Column(name = "subtitle", nullable = false, length = 255)
+    @Column(name = "subtitle", nullable = false)
     public String getSubtitle() {
         return subtitle;
     }
@@ -120,7 +173,7 @@ public class News {
     }
 
     @Basic
-    @javax.persistence.Column(name = "title", nullable = false, length = 255)
+    @Column(name = "title", nullable = false)
     public String getTitle() {
         return title;
     }
@@ -130,66 +183,32 @@ public class News {
     }
 
     @Basic
-    @javax.persistence.Column(name = "type", nullable = false)
-    public short getType() {
+    @Column(name = "type", nullable = false)
+    public Short getType() {
         return type;
     }
 
-    public void setType(short type) {
+    public void setType(Short type) {
         this.type = type;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        News news = (News) o;
-
-        if (nid != news.nid) return false;
-        if (isdraft != news.isdraft) return false;
-        if (istop != news.istop) return false;
-        if (type != news.type) return false;
-        if (auther != null ? !auther.equals(news.auther) : news.auther != null) return false;
-        if (date != null ? !date.equals(news.date) : news.date != null) return false;
-        if (message != null ? !message.equals(news.message) : news.message != null) return false;
-        if (pic != null ? !pic.equals(news.pic) : news.pic != null) return false;
-        if (subtitle != null ? !subtitle.equals(news.subtitle) : news.subtitle != null) return false;
-        if (title != null ? !title.equals(news.title) : news.title != null) return false;
-
-        return true;
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "tid", referencedColumnName = "tid", updatable = false, insertable = false)
+    public Team getLTeams() {
+        return lTeams;
     }
 
-    @Override
-    public int hashCode() {
-        int result = nid;
-        result = 31 * result + (auther != null ? auther.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (int) isdraft;
-        result = 31 * result + (int) istop;
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        result = 31 * result + (pic != null ? pic.hashCode() : 0);
-        result = 31 * result + (subtitle != null ? subtitle.hashCode() : 0);
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (int) type;
-        return result;
+    public void setLTeams(Team lTeams) {
+        this.lTeams = lTeams;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "cid", referencedColumnName = "cid")
-    public Column getColumnByCid() {
-        return columnByCid;
+    @Basic
+    @Column(name = "tid", nullable = false)
+    public Integer getTid() {
+        return tid;
     }
 
-    public void setColumnByCid(Column columnByCid) {
-        this.columnByCid = columnByCid;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "tid", referencedColumnName = "tid")
-    public Team getTeamByTid() { return teamByTid; }
-
-    public void setTeamByTid(Team columnByTid) {
-        this.teamByTid = columnByTid;
+    public void setTid(Integer tid) {
+        this.tid = tid;
     }
 }
