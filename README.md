@@ -18,7 +18,7 @@
         <td>项目立项和框架的搭建</td>
         <td>lipengbiao</td>
         <td>-</td>
-        <td bgcolor=PowderBlue></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td>√</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
         <td>-</td>
     </tr>
     <tr>
