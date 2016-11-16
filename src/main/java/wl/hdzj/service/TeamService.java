@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface TeamService {
     @Transactional
-    Team add(TeamVO teamVO) throws Exception;
+    Team add(TeamVO teamVO, String sid) throws Exception;
     Page<Team> gets(Pageable p);
     @Transactional
     long deleteByIDs(List<Integer> ids);
     @Transactional
-    Team update(TeamVO teamVO) throws Exception;
+    Team update(TeamVO teamVO, String sid) throws Exception;
     Page<Team> querys(TeamVO teamVO, Pageable p);
 }

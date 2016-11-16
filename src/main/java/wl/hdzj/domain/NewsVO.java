@@ -3,16 +3,20 @@ package wl.hdzj.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.Range;
 import wl.hdzj.common.AddVaild;
+import wl.hdzj.common.UpdateVaild;
 import wl.hdzj.entity.Columnnn;
 import wl.hdzj.entity.Team;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * 新闻 - 领域模型
  * @author: lipengbiao
  */
 public class NewsVO{
+    @NotNull(message = "新闻ID不为空", groups = {UpdateVaild.class})
     private Integer nid;
 
     /*
@@ -32,6 +36,7 @@ public class NewsVO{
      */
     private Columnnn lColumn;
     private Team lTeams;
+
     @NotBlank(message = "参数非空", groups = {AddVaild.class})
     @Length(max = 500, message = "标题长度不超过500位字符")
     private String title;
@@ -44,12 +49,11 @@ public class NewsVO{
     @NotBlank(message = "参数非空", groups = {AddVaild.class})
     @Length(max = 500, message = "作者字段长度不超过500字符")
     private String auther;
-    @NotBlank(message = "图片参数不能为空", groups = {AddVaild.class})
     private String pic;
     private Short type;
-    @Range(min = 0, max = 1, message = "isdraft字段错误")
+    @Size(max = 1, message = "isdraft字段错误")
     private Short isdraft;
-    @Range(min = 0, max = 1, message = "istop字段错误")
+    @Size(max = 1, message = "istop字段错误")
     private Short istop;
 
     /*

@@ -7,6 +7,7 @@ import wl.hdzj.common.UpdateVaild;
 import javax.validation.constraints.NotNull;
 
 public class ColumnVO {
+    //更新时栏目id不为空
     @NotNull(message = "栏目ID不能为空", groups = {UpdateVaild.class})
     private Integer cid;
 

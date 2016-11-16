@@ -12,7 +12,7 @@ public class User {
     private String passwd;
     private String phone;
     private Short sex;
-    private String role;
+    private Short role;
     private String salt;
 
     @Id
@@ -90,12 +90,12 @@ public class User {
     }
 
     @Basic
-    @Column(name = "role", nullable = false, length = 10)
-    public String getRole() {
+    @Column(name = "role", nullable = false)
+    public Short getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Short role) {
         this.role = role;
     }
 

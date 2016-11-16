@@ -15,6 +15,6 @@ public interface NewsService {
     @Transactional
     long deleteByIDs(List<Integer> ids);
     @Transactional
-    News update(NewsVO newsVO) throws Exception;
+    News update(NewsVO newsVO, String sid) throws Exception;
     Page<News> querys(NewsVO newsVO, Pageable p);
 }

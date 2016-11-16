@@ -1,12 +1,15 @@
 package wl.hdzj.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
-import javax.persistence.Column;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "member", schema = "hdzj_2016")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Member {
     private Integer mid;
     private String name;
@@ -161,7 +164,8 @@ public class Member {
         return Objects.hash(mid, name, sex, jobtitle, subject, describe, pic, identify, isshow, xueyuan, rTeams);
     }
 
-    @ManyToMany(cascade = {}, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToMany
     @JoinTable(name = "relation", schema = "hdzj_2016",
             joinColumns = @JoinColumn(name = "mid", referencedColumnName = "mid", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "tid", referencedColumnName = "tid", nullable = false))

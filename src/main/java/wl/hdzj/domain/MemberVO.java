@@ -22,9 +22,10 @@ public class MemberVO{
     private String subject;
     private String describe;
 
-    @NotNull(message = "成员图片不为空", groups = {AddVaild.class})
     private String pic;
+    @Size(max = 1, message = "参数非法")
     private Short identify;
+    @Size(max = 1, message = "参数非法")
     private Short isshow;
     private String xueyuan;
 

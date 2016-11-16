@@ -1,6 +1,7 @@
 package wl.hdzj.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "columnnn", schema = "hdzj_2016")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Columnnn {
     private Integer cid;
     private String name;
@@ -53,7 +55,7 @@ public class Columnnn {
     }
 
     @Basic
-    @javax.persistence.Column(name = "parterid", nullable = false)
+    @javax.persistence.Column(name = "parterid")
     public Integer getParterid() {
         return parterid;
     }
@@ -63,8 +65,8 @@ public class Columnnn {
     }
 
     //禁止无限递归
-    @JsonBackReference()
-    @OneToMany(mappedBy = "LColumn", cascade = {}, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "LColumn", cascade = {})
     public List<News> getLNews() {
         return lNews;
     }

@@ -1,23 +1,28 @@
 package wl.hdzj.domain;
 
 import org.hibernate.validator.constraints.NotBlank;
+import wl.hdzj.common.AddVaild;
+import wl.hdzj.common.UpdateVaild;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by lipengbiao on 2016/11/14.
  */
 public class UserVO {
+    @NotNull(message = "用户ID不能为空", groups = {UpdateVaild.class})
     private Integer uid;
 
-    @NotBlank(message = "用户名不能为空")
+    @NotBlank(message = "用户名不能为空", groups = {AddVaild.class})
     private String account;
-    @NotBlank(message = "姓名不能为空")
+    @NotBlank(message = "姓名不能为空", groups = {AddVaild.class})
     private String name;
-    @NotBlank(message = "密码不能为空")
+    @NotBlank(message = "密码不能为空", groups = {AddVaild.class})
     private String passwd;
     private String phone;
     private Short sex;
-    @NotBlank(message = "权限角色不能为空")
-    private String role;
+    @NotBlank(message = "角色不能为空", groups = {AddVaild.class})
+    private Short role;
 
     public Integer getUid() {
         return uid;
@@ -81,11 +86,11 @@ public class UserVO {
         this.sex = sex;
     }
 
-    public String getRole() {
+    public Short getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Short role) {
         this.role = role;
     }
 }

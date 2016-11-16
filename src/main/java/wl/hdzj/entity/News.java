@@ -1,16 +1,14 @@
 package wl.hdzj.entity;
 
-import groovy.transform.BaseScript;
-import org.springframework.beans.factory.annotation.Autowired;
-import wl.hdzj.dao.TeamRepository;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import javax.persistence.Column;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "news", schema = "hdzj_2016")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class News {
     private Integer nid;
     private String auther;
@@ -123,7 +121,7 @@ public class News {
     }
 
     @Basic
-    @Column(name = "isdraft", nullable = false)
+    @Column(name = "isdraft")
     public Short getIsdraft() {
         return isdraft;
     }
@@ -133,7 +131,7 @@ public class News {
     }
 
     @Basic
-    @Column(name = "istop", nullable = false)
+    @Column(name = "istop")
     public Short getIstop() {
         return istop;
     }
@@ -153,7 +151,7 @@ public class News {
     }
 
     @Basic
-    @Column(name = "pic", nullable = false)
+    @Column(name = "pic")
     public String getPic() {
         return pic;
     }
@@ -163,7 +161,7 @@ public class News {
     }
 
     @Basic
-    @Column(name = "subtitle", nullable = false)
+    @Column(name = "subtitle")
     public String getSubtitle() {
         return subtitle;
     }
@@ -183,7 +181,7 @@ public class News {
     }
 
     @Basic
-    @Column(name = "type", nullable = false)
+    @Column(name = "type")
     public Short getType() {
         return type;
     }
@@ -203,7 +201,7 @@ public class News {
     }
 
     @Basic
-    @Column(name = "tid", nullable = false)
+    @Column(name = "tid")
     public Integer getTid() {
         return tid;
     }

@@ -1,15 +1,15 @@
 package wl.hdzj.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import javax.persistence.Column;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "team", schema = "hdzj_2016")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Team{
     private Integer tid;
     private Integer del;
@@ -52,8 +52,8 @@ public class Team{
         return Objects.hash(tid, del, desride, name, pic, rMember, lNews);
     }
 
-    @ManyToMany(mappedBy = "RTeams",cascade = {}, fetch = FetchType.LAZY)
-    @JsonBackReference()
+    @ManyToMany(mappedBy = "RTeams")
+    @JsonIgnore
     public List<Member> getRMember() {
         return rMember;
     }
@@ -62,8 +62,8 @@ public class Team{
         this.rMember = rMember;
     }
 
-    @OneToMany(mappedBy = "LTeams", cascade = {}, fetch = FetchType.LAZY)
-    @JsonBackReference()
+    @OneToMany(mappedBy = "LTeams", cascade = {})
+    @JsonIgnore
     public List<News> getlNews() {
         return lNews;
     }

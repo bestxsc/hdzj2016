@@ -1,14 +1,17 @@
 package wl.hdzj.domain;
 
-import wl.hdzj.entity.Member;
-import wl.hdzj.entity.News;
+import org.hibernate.validator.constraints.NotBlank;
+import wl.hdzj.common.AddVaild;
+import wl.hdzj.common.UpdateVaild;
 
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 public class TeamVO{
+    @NotNull(groups = {UpdateVaild.class})
     private Integer tid;
     private Integer del;
     private String desride;
+    @NotBlank(groups = {AddVaild.class})
     private String name;
     private String pic;
 

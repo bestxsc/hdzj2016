@@ -30,7 +30,7 @@ public class MyUserDetailsService implements UserDetailsService {
         List<wl.hdzj.entity.User> tuser = dbUser.findTop1ByAccount(s);
         if (tuser.size() == 0) throw new UsernameNotFoundException("Error in retrieving user");
         Collection<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-        auths.add(new SimpleGrantedAuthority(tuser.get(0).getRole()));
+        auths.add(new SimpleGrantedAuthority("USER"));
         return new User(tuser.get(0).getAccount(), tuser.get(0).getPasswd(), true, true, true, true, auths);
     }
 }

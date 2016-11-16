@@ -1,5 +1,7 @@
 package wl.hdzj.domain;
 
+import wl.hdzj.common.AddVaild;
+
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -9,9 +11,9 @@ import java.util.Objects;
 public class RelationVO {
     @NotNull
     private Integer rid;
-    @NotNull
+    @NotNull(groups = {AddVaild.class})
     private Integer mid;
-    @NotNull
+    @NotNull(groups = {AddVaild.class})
     private Integer tid;
 
     @Override

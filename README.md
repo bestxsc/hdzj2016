@@ -37,6 +37,12 @@
         <td></td><td></td><td></td><td></td><td bgcolor=PowderBlue>√</td><td bgcolor=PowderBlue>√</td><td bgcolor=PowderBlue>√</td><td bgcolor=PowderBlue>√</td><td bgcolor=PowderBlue>√</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
         <td>-</td>
     </tr>
+    <tr>
+        <td>数据校验、表Pic字段的文件上传修改、Bug修复</td>
+        <td>lipengbiao</td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td bgcolor=PowderBlue>√</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td>-</td>
+    </tr>
 </table>
 
 ## 开发进度表
@@ -51,19 +57,19 @@
     <tr>
         <td rowspan = "3">李朋彪</td>
         <td>添加</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
-        <td>HDZJ2016.postman_collection</td>
+        <td>-</td>
     </tr>
     <tr>
         <td>查询</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>修改&删除</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
@@ -77,19 +83,19 @@
     <tr>
         <td rowspan = "3">李朋彪</td>
         <td>添加</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>查询</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>修改&删除</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
@@ -103,19 +109,19 @@
     <tr>
         <td rowspan = "3">李朋彪</td>
         <td>添加</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>查询</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>修改&删除</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
@@ -129,19 +135,19 @@
     <tr>
         <td rowspan = "3">李朋彪</td>
         <td>添加</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>查询</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>修改&删除</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
@@ -155,19 +161,19 @@
     <tr>
         <td rowspan = "3">李朋彪</td>
         <td>添加</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>查询</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>
     <tr>
         <td>修改&删除</td>
-        <td>v0.1</td>
+        <td>v0.2</td>
         <td bgcolor= Yellow>未测试</td>
         <td>-</td>
     </tr>

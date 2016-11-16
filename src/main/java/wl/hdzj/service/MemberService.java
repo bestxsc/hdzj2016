@@ -16,6 +16,6 @@ public interface MemberService {
     @Transactional
     long deleteByIDs(List<Integer> ids);
     @Transactional
-    Member update(MemberVO memberVO) throws Exception;
+    Member update(MemberVO memberVO, String sid) throws Exception;
     Page<Member> querys(MemberVO memberVO, Pageable p);
 }
